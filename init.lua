@@ -85,10 +85,7 @@ vim.keymap.set({ 'n', 'v' }, 'H', '^', { noremap = true, silent = true })
 -- Move to end of line
 vim.keymap.set('n', 'L', '$', { noremap = true, silent = true })
 vim.keymap.set('v', 'L', '$h', { noremap = true, silent = true })
--- Move lines up/down,
--- TODO: the normal mode ones do not work!
-vim.keymap.set('n', '<C-j>', ':m .+1<CR>==', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-k>', ':m .-2<CR>==', { noremap = true, silent = true })
+-- Move lines up/down
 vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
