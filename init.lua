@@ -71,6 +71,29 @@ vim.opt.scrolloff = 10
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- Custom keymaps
+
+vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>', {
+  desc = 'Exit insert mode and save on <C>s',
+  noremap = true,
+  silent = true,
+})
+-- Copy to clipboard and return to normal mode
+vim.keymap.set('v', '<S-y>', '"+y<Esc>', { noremap = true, silent = true })
+-- Move to first non-blank character of the line
+vim.keymap.set({ 'n', 'v' }, 'H', '^', { noremap = true, silent = true })
+-- Move to end of line
+vim.keymap.set('n', 'L', '$', { noremap = true, silent = true })
+vim.keymap.set('v', 'L', '$h', { noremap = true, silent = true })
+-- Move lines up/down,
+-- TODO: the normal mode ones do not work!
+vim.keymap.set('n', '<C-j>', ':m .+1<CR>==', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-k>', ':m .-2<CR>==', { noremap = true, silent = true })
+vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+
+-- End of custom
+
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
