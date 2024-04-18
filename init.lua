@@ -73,13 +73,16 @@ vim.opt.scrolloff = 10
 
 -- Custom keymaps
 
-vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>', {
+vim.keymap.set({ 'i', 'n' }, '<C-s>', '<Esc>:w<CR>', {
   desc = 'Exit insert mode and save on <C>s',
   noremap = true,
   silent = true,
 })
 -- Copy to clipboard and return to normal mode
 vim.keymap.set('v', '<S-y>', '"+y<Esc>', { noremap = true, silent = true })
+-- Paste from clipboard
+vim.keymap.set('n', '<C-S-v>', '"+p', { noremap = true, silent = true })
+vim.keymap.set('i', '<C-S-v>', '<Esc>"+pi', { noremap = true, silent = true })
 -- Move to first non-blank character of the line
 vim.keymap.set({ 'n', 'v' }, 'H', '^', { noremap = true, silent = true })
 -- Move to end of line
@@ -88,6 +91,9 @@ vim.keymap.set('v', 'L', '$h', { noremap = true, silent = true })
 -- Move lines up/down
 vim.keymap.set('v', '<C-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 vim.keymap.set('v', '<C-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+-- Treat <C-Backspace> as normally in insert mode, removing word backwards
+-- TODO: This does not work :(
+vim.keymap.set('i', '<C-BS>', '<Esc>dbi', { noremap = true, silent = true })
 
 -- End of custom
 
@@ -206,6 +212,27 @@ require('lazy').setup({
   -- Then, because we use the `config` key, the configuration only runs
   -- after the plugin has been loaded:
   --  config = function() ... end
+  {
+    'zbirenbaum/copilot.lua',
+    event = 'InsertEnter',
+    config = function()
+      require('copilot').setup {
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept_word = '<M-j>',
+            accept_line = '<M-k>',
+          },
+        },
+      }
+    end,
+  },
+
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
+  },
 
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
